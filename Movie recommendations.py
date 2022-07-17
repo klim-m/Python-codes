@@ -23,7 +23,7 @@ def get_movies_from_tastedive(word):
 
 def get_movie_data(movie):
     base_url = 'http://www.omdbapi.com/'
-    api_key = "499b7e"
+    api_key = "******"
     param = {}
     param['t'] = movie
     param['r'] = "json"
