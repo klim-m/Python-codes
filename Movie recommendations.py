@@ -21,5 +21,32 @@ def get_movies_from_tastedive(word):
     return movie_names
 
 
-movie = input("Please enter movie name")
-print("Recommendations for {} are {}".format(movie, get_movies_from_tastedive(movie)))
+def get_movie_data(movie):
+    base_url = 'http://www.omdbapi.com/'
+    api_key = "499b7e"
+    param = {}
+    param['t'] = movie
+    param['r'] = "json"
+    param['apikey']= api_key
+    #print(param)
+    omdb_api = requests.get(base_url, params = param)
+    omdb_info = json.loads(omdb_api.text)
+    return omdb_info
+
+def movieResults(movie):
+    movie_metadata = get_movie_data(movie)
+    duration = movie_metadata['Runtime']
+    imdbRating = movie_metadata['imdbRating']
+    gross = movie_metadata["BoxOffice"]
+    title_year = movie_metadata["Year"]
+    message = "Movie: {} ,Title Year: {} , Duration: {} , imdb: {} , gross: {} ".format(movie, title_year, duration, imdbRating, gross)
+    return message
+
+def message():
+    movie = input("Please enter movie name")
+    message = "Recommendations for {} are {}".format(movie, get_movies_from_tastedive(movie))
+    message2 = ("Data for {} is {}".format(movie, movieResults(movie)))
+    final_message = message + message2
+    return final_message
+
+message()
